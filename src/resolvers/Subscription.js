@@ -20,7 +20,7 @@ const Subscription = {
             const userId = getUserId(request)
 
             return prisma.subscription.user({
-                       user: userId
+                    user: userId
             }, info)
         }
     },
