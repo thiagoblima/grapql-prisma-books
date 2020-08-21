@@ -40,7 +40,7 @@ Distributed under the XYZ license. See ``LICENSE`` for more information.
 
 ## Contributing
 
-1. Fork it (<https://github.com/thiagoblima/M103-Basic-Cluster-Administrationfork>)
+1. Fork it (<https://github.com/thiagoblima/grapql-prisma-books/fork>)
 2. Create your feature branch (`git checkout -b feature/fooBar`)
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
