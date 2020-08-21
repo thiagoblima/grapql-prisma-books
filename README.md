@@ -36,7 +36,7 @@ Thiago Lima
 
 Distributed under the XYZ license. See ``LICENSE`` for more information.
 
-[https://github.com/thiagoblima/M103-Basic-Cluster-Administration/blob/master/LICENSE](https://github.com/thiagoblima/M103-Basic-Cluster-Administration/blob/master/LICENSE)
+[https://github.com/thiagoblima/grapql-prisma-books/blob/master/LICENSE](https://github.com/thiagoblima/grapql-prisma-books/blob/master/LICENSE)
 
 ## Contributing
 
