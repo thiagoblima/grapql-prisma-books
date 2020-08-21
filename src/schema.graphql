@@ -18,6 +18,7 @@ type Query {
 
     type Subscription {
         count: Int!
+        user: CreateUserSubscriptionPayload!
     }
 
     type AuthPayload {
@@ -54,5 +55,10 @@ type Query {
         CREATED,
         DELETED,
         UPDATED
+    }
+
+      type CreateUserSubscriptionPayload {
+        mutation: MutationType!
+        node: User!
     }
     

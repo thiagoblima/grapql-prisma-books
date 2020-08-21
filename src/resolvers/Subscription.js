@@ -14,7 +14,16 @@ const Subscription = {
 
             return pubsub.asyncIterator('count')
         }
-    }
+    },
+    user: {
+        subscribe(parent, args, { request, prisma }, info) {
+            const userId = getUserId(request)
+
+            return prisma.subscription.user({
+                       user: userId
+            }, info)
+        }
+    },
 }
 
 export { Subscription as default }
