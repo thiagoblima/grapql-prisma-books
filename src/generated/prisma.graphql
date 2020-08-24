@@ -1,5 +1,5 @@
-# source: http://localhost:4466/food/dev
-# timestamp: Mon Aug 24 2020 00:32:12 GMT-0300 (-03)
+# source: https://thiago-blogging-app-76dc368f1e.herokuapp.com/food/prod
+# timestamp: Mon Aug 24 2020 00:42:14 GMT-0300 (-03)
 
 type AggregateBook {
   count: Int!
@@ -18,7 +18,7 @@ type Book implements Node {
   id: ID!
   name: String!
   author: String!
-  reviwer(where: UserWhereInput): User!
+  reviwer: User!
   isbn: String!
   rating: Int!
   createdAt: DateTime!
@@ -36,6 +36,7 @@ type BookConnection {
 }
 
 input BookCreateInput {
+  id: ID
   name: String!
   author: String!
   isbn: String!
@@ -49,6 +50,7 @@ input BookCreateManyWithoutReviwerInput {
 }
 
 input BookCreateWithoutReviwerInput {
+  id: ID
   name: String!
   author: String!
   isbn: String!
@@ -89,6 +91,243 @@ type BookPreviousValues {
   rating: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+input BookScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BookScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BookScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BookScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  author: String
+
+  """All values that are not equal to given value."""
+  author_not: String
+
+  """All values that are contained in given list."""
+  author_in: [String!]
+
+  """All values that are not contained in given list."""
+  author_not_in: [String!]
+
+  """All values less than the given value."""
+  author_lt: String
+
+  """All values less than or equal the given value."""
+  author_lte: String
+
+  """All values greater than the given value."""
+  author_gt: String
+
+  """All values greater than or equal the given value."""
+  author_gte: String
+
+  """All values containing the given string."""
+  author_contains: String
+
+  """All values not containing the given string."""
+  author_not_contains: String
+
+  """All values starting with the given string."""
+  author_starts_with: String
+
+  """All values not starting with the given string."""
+  author_not_starts_with: String
+
+  """All values ending with the given string."""
+  author_ends_with: String
+
+  """All values not ending with the given string."""
+  author_not_ends_with: String
+  isbn: String
+
+  """All values that are not equal to given value."""
+  isbn_not: String
+
+  """All values that are contained in given list."""
+  isbn_in: [String!]
+
+  """All values that are not contained in given list."""
+  isbn_not_in: [String!]
+
+  """All values less than the given value."""
+  isbn_lt: String
+
+  """All values less than or equal the given value."""
+  isbn_lte: String
+
+  """All values greater than the given value."""
+  isbn_gt: String
+
+  """All values greater than or equal the given value."""
+  isbn_gte: String
+
+  """All values containing the given string."""
+  isbn_contains: String
+
+  """All values not containing the given string."""
+  isbn_not_contains: String
+
+  """All values starting with the given string."""
+  isbn_starts_with: String
+
+  """All values not starting with the given string."""
+  isbn_not_starts_with: String
+
+  """All values ending with the given string."""
+  isbn_ends_with: String
+
+  """All values not ending with the given string."""
+  isbn_not_ends_with: String
+  rating: Int
+
+  """All values that are not equal to given value."""
+  rating_not: Int
+
+  """All values that are contained in given list."""
+  rating_in: [Int!]
+
+  """All values that are not contained in given list."""
+  rating_not_in: [Int!]
+
+  """All values less than the given value."""
+  rating_lt: Int
+
+  """All values less than or equal the given value."""
+  rating_lte: Int
+
+  """All values greater than the given value."""
+  rating_gt: Int
+
+  """All values greater than or equal the given value."""
+  rating_gte: Int
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
 }
 
 type BookSubscriptionPayload {
@@ -135,16 +374,38 @@ input BookUpdateInput {
   author: String
   isbn: String
   rating: Int
-  reviwer: UserUpdateOneWithoutBooksInput
+  reviwer: UserUpdateOneRequiredWithoutBooksInput
+}
+
+input BookUpdateManyDataInput {
+  name: String
+  author: String
+  isbn: String
+  rating: Int
+}
+
+input BookUpdateManyMutationInput {
+  name: String
+  author: String
+  isbn: String
+  rating: Int
 }
 
 input BookUpdateManyWithoutReviwerInput {
   create: [BookCreateWithoutReviwerInput!]
   connect: [BookWhereUniqueInput!]
+  set: [BookWhereUniqueInput!]
   disconnect: [BookWhereUniqueInput!]
   delete: [BookWhereUniqueInput!]
   update: [BookUpdateWithWhereUniqueWithoutReviwerInput!]
+  updateMany: [BookUpdateManyWithWhereNestedInput!]
+  deleteMany: [BookScalarWhereInput!]
   upsert: [BookUpsertWithWhereUniqueWithoutReviwerInput!]
+}
+
+input BookUpdateManyWithWhereNestedInput {
+  where: BookScalarWhereInput!
+  data: BookUpdateManyDataInput!
 }
 
 input BookUpdateWithoutReviwerDataInput {
@@ -424,8 +685,8 @@ type Mutation {
   deleteBook(where: BookWhereUniqueInput!): Book
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertBook(where: BookWhereUniqueInput!, create: BookCreateInput!, update: BookUpdateInput!): Book!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
-  updateManyBooks(data: BookUpdateInput!, where: BookWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyBooks(data: BookUpdateManyMutationInput!, where: BookWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyBooks(where: BookWhereInput): BatchPayload!
 }
@@ -498,6 +759,7 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  id: ID
   name: String!
   password: String!
   email: String!
@@ -510,6 +772,7 @@ input UserCreateOneWithoutBooksInput {
 }
 
 input UserCreateWithoutBooksInput {
+  id: ID
   name: String!
   password: String!
   email: String!
@@ -594,10 +857,15 @@ input UserUpdateInput {
   books: BookUpdateManyWithoutReviwerInput
 }
 
-input UserUpdateOneWithoutBooksInput {
+input UserUpdateManyMutationInput {
+  name: String
+  password: String
+  email: String
+}
+
+input UserUpdateOneRequiredWithoutBooksInput {
   create: UserCreateWithoutBooksInput
   connect: UserWhereUniqueInput
-  delete: Boolean
   update: UserUpdateWithoutBooksDataInput
   upsert: UserUpsertWithoutBooksInput
 }
