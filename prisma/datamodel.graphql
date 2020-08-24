@@ -11,7 +11,8 @@ type User {
 type Book {
   id: ID! @id @unique
   name: String!
-  atuhor: String!
+  author: String!
+  reviwer: User! @relation(name: "BookToUser", onDelete: SET_NULL)
   isbn: String!
   rating: Int!
   createdAt: DateTime! @createdAt
