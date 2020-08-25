@@ -1,8 +1,9 @@
-# import UserOrderByInput, BookOrderByInput from './generated/prisma.graphql'
+# import UserOrderByInput, BookOrderByInput, ReviewOrderByInput from './generated/prisma.graphql'
 
-type Query {
+    type Query {
         users(query: String, first: Int, skip: Int, after: String, orderBy: UserOrderByInput): [User!]!
         books(query: String, first: Int, skip: Int, after: String, orderBy: BookOrderByInput): [Book!]!
+        reviews(first: Int, skip: Int, after: String, orderBy: ReviewOrderByInput): [Review!]!
         greeting(name: String, position: String): String!
         order(item: String, qtd: Int, price: Float!): String!
         add(numbers: [Float!]!): Float!
@@ -12,9 +13,9 @@ type Query {
 
     type Mutation {
         createUser(data: CreateUserInput!): AuthPayload!
-        login(data: LoginUserInput!): AuthPayload!
-        deleteUser: User!
         updateUser(data: UpdateUserInput!): User!
+        deleteUser: User!
+        login(data: LoginUserInput!): AuthPayload!
     }
 
     type Subscription {
@@ -59,8 +60,19 @@ type Query {
         author: String!
         reviwer: User!
         isbn: String!
+        published: Boolean!
         rating: Int!
         createdAt: DateTime! 
+        updatedAt: DateTime!
+    }
+
+    type Review {
+        id: ID!
+        text: String!
+        title: String!
+        reviwer: User!
+        book: Book!
+        createdAt: DateTime!
         updatedAt: DateTime!
     }
 

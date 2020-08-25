@@ -18,3 +18,13 @@ type Book {
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
+
+type Review {
+  id: ID! @id @unique
+  title: String!
+  text: String!
+  reviwer: User! @relation(name: "ReviewToUser", onDelete: SET_NULL)
+  book: Book! @relation(name: "ReviewToBook", onDelete: SET_NULL)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
