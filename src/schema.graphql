@@ -60,6 +60,7 @@
         author: String!
         reviwer: User!
         isbn: String!
+        lie: Int!
         published: Boolean!
         rating: Int!
         createdAt: DateTime! 
@@ -71,6 +72,7 @@
         text: String!
         title: String!
         reviwer: User!
+        like: Int!
         book: Book!
         createdAt: DateTime!
         updatedAt: DateTime!
