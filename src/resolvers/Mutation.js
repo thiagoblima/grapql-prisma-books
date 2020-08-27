@@ -55,7 +55,6 @@ const Mutation = {
         }, info)
 
     },
-
     async updateUser(parent, args, { prisma, request }, info) {
         const userExists = await prisma.exists.User({ id: args.id })
         const userId = getUserId(request)
@@ -88,14 +87,10 @@ const Mutation = {
                     }
                 },
                 isbn: args.data.isbn,
-                like: args.data.like,
-                published: args.data.published,
-                rating: args.data.published
-
+                published: args.data.published
             }
         }, info)
-    },
-
+    }
 }
 
-export { Mutation as default } 
+export { Mutation as default }
