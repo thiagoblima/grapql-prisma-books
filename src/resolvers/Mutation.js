@@ -4,12 +4,12 @@ import generateToken from '../utils/generateToken'
 import hasPassword from '../utils/hashPassword'
 
 const Mutation = {
-  async createUser(parent, args, { prisma }, info) {
-        const password = await hasPassword(args.data.password) 
-        const user = await prisma.mutation.createUser({ 
+    async createUser(parent, args, { prisma }, info) {
+        const password = await hasPassword(args.data.password)
+        const user = await prisma.mutation.createUser({
             data: {
-              ...args.data,
-              password 
+                ...args.data,
+                password
             }
         })
 
@@ -24,13 +24,13 @@ const Mutation = {
                 email: args.data.email
             }
         })
-        
+
         if (!user) {
-             throw new Error('Unable to login')
+            throw new Error('Unable to login')
         }
 
         const isMatch = await bcrypt.compare(args.data.password, user.password)
-        
+
         if (!isMatch) {
             throw new Error('Unable to login')
         }
@@ -41,18 +41,18 @@ const Mutation = {
         }
     },
     async deleteUser(parent, args, { prisma, request }, info) {
-      const userExists = await prisma.exists.User({ id: args.id })
-      const userId = getUserId(request)
+        const userExists = await prisma.exists.User({ id: args.id })
+        const userId = getUserId(request)
 
-       if (!userExists) {
-           throw new Error('User doesn\'t exist')
-       }
-       
-       return prisma.mutation.deleteUser({
-           where: {
-               id: userId
-           }
-       }, info)
+        if (!userExists) {
+            throw new Error('User doesn\'t exist')
+        }
+
+        return prisma.mutation.deleteUser({
+            where: {
+                id: userId
+            }
+        }, info)
 
     },
 
@@ -61,7 +61,7 @@ const Mutation = {
         const userId = getUserId(request)
 
 
-        if (typeof args.data.password === 'string' ) {
+        if (typeof args.data.password === 'string') {
             args.data.password = await hasPassword(args.data.password)
         }
 
@@ -76,7 +76,26 @@ const Mutation = {
             data: args.data
         }, info)
     },
-    
+    async createBook(parent, args, { prisma, request }, info) {
+        const userId = getUserId(request)
+        return prisma.mutation.createBook({
+            data: {
+                name: args.data.name,
+                author: args.data.author,
+                reviwer: {
+                    connect: {
+                        id: userId
+                    }
+                },
+                isbn: args.data.isbn,
+                like: args.data.like,
+                published: args.data.published,
+                rating: args.data.published
+
+            }
+        }, info)
+    },
+
 }
 
 export { Mutation as default } 

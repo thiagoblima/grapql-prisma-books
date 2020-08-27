@@ -12,10 +12,11 @@
     }
 
     type Mutation {
+        login(data: LoginUserInput!): AuthPayload!
         createUser(data: CreateUserInput!): AuthPayload!
         updateUser(data: UpdateUserInput!): User!
         deleteUser: User!
-        login(data: LoginUserInput!): AuthPayload!
+        createBook(data: CreateBookInput!): Book!
     }
 
     type Subscription {
@@ -43,6 +44,13 @@
         name: String
         email: String
         password: String
+    }
+
+    input CreateBookInput {
+        name: String!
+        author: String!
+        isbn: String!
+        published: Boolean!
     }
 
     type User {
