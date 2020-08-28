@@ -1,5 +1,5 @@
 # source: http://localhost:4466/food/dev
-# timestamp: Fri Aug 28 2020 17:00:07 GMT-0300 (-03)
+# timestamp: Fri Aug 28 2020 17:55:45 GMT-0300 (-03)
 
 type AggregateBook {
   count: Int!
@@ -21,12 +21,12 @@ type BatchPayload {
 type Book implements Node {
   id: ID!
   name: String!
-  author: String!
-  reviwer(where: UserWhereInput): User!
+  author(where: UserWhereInput): User!
+  reviwer(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
   published: Boolean!
   isbn: String!
-  like: Int!
-  rating: Int!
+  like: Int
+  rating: Int
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -43,31 +43,40 @@ type BookConnection {
 
 input BookCreateInput {
   name: String!
-  author: String!
   published: Boolean!
   isbn: String!
-  like: Int!
-  rating: Int!
-  reviwer: UserCreateOneWithoutBooksInput!
+  like: Int
+  rating: Int
+  author: UserCreateOneWithoutBooksInput!
+  reviwer: ReviewCreateManyWithoutBookInput
 }
 
-input BookCreateManyWithoutReviwerInput {
-  create: [BookCreateWithoutReviwerInput!]
+input BookCreateManyWithoutAuthorInput {
+  create: [BookCreateWithoutAuthorInput!]
   connect: [BookWhereUniqueInput!]
 }
 
-input BookCreateOneInput {
-  create: BookCreateInput
+input BookCreateOneWithoutReviwerInput {
+  create: BookCreateWithoutReviwerInput
   connect: BookWhereUniqueInput
+}
+
+input BookCreateWithoutAuthorInput {
+  name: String!
+  published: Boolean!
+  isbn: String!
+  like: Int
+  rating: Int
+  reviwer: ReviewCreateManyWithoutBookInput
 }
 
 input BookCreateWithoutReviwerInput {
   name: String!
-  author: String!
   published: Boolean!
   isbn: String!
-  like: Int!
-  rating: Int!
+  like: Int
+  rating: Int
+  author: UserCreateOneWithoutBooksInput!
 }
 
 """An edge in a connection."""
@@ -84,8 +93,6 @@ enum BookOrderByInput {
   id_DESC
   name_ASC
   name_DESC
-  author_ASC
-  author_DESC
   published_ASC
   published_DESC
   isbn_ASC
@@ -103,11 +110,10 @@ enum BookOrderByInput {
 type BookPreviousValues {
   id: ID!
   name: String!
-  author: String!
   published: Boolean!
   isbn: String!
-  like: Int!
-  rating: Int!
+  like: Int
+  rating: Int
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -151,66 +157,65 @@ input BookSubscriptionWhereInput {
   node: BookWhereInput
 }
 
-input BookUpdateDataInput {
-  name: String
-  author: String
-  published: Boolean
-  isbn: String
-  like: Int
-  rating: Int
-  reviwer: UserUpdateOneWithoutBooksInput
-}
-
 input BookUpdateInput {
   name: String
-  author: String
   published: Boolean
   isbn: String
   like: Int
   rating: Int
-  reviwer: UserUpdateOneWithoutBooksInput
+  author: UserUpdateOneWithoutBooksInput
+  reviwer: ReviewUpdateManyWithoutBookInput
 }
 
-input BookUpdateManyWithoutReviwerInput {
-  create: [BookCreateWithoutReviwerInput!]
+input BookUpdateManyWithoutAuthorInput {
+  create: [BookCreateWithoutAuthorInput!]
   connect: [BookWhereUniqueInput!]
   disconnect: [BookWhereUniqueInput!]
   delete: [BookWhereUniqueInput!]
-  update: [BookUpdateWithWhereUniqueWithoutReviwerInput!]
-  upsert: [BookUpsertWithWhereUniqueWithoutReviwerInput!]
+  update: [BookUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [BookUpsertWithWhereUniqueWithoutAuthorInput!]
 }
 
-input BookUpdateOneInput {
-  create: BookCreateInput
+input BookUpdateOneWithoutReviwerInput {
+  create: BookCreateWithoutReviwerInput
   connect: BookWhereUniqueInput
   delete: Boolean
-  update: BookUpdateDataInput
-  upsert: BookUpsertNestedInput
+  update: BookUpdateWithoutReviwerDataInput
+  upsert: BookUpsertWithoutReviwerInput
+}
+
+input BookUpdateWithoutAuthorDataInput {
+  name: String
+  published: Boolean
+  isbn: String
+  like: Int
+  rating: Int
+  reviwer: ReviewUpdateManyWithoutBookInput
 }
 
 input BookUpdateWithoutReviwerDataInput {
   name: String
-  author: String
   published: Boolean
   isbn: String
   like: Int
   rating: Int
+  author: UserUpdateOneWithoutBooksInput
 }
 
-input BookUpdateWithWhereUniqueWithoutReviwerInput {
+input BookUpdateWithWhereUniqueWithoutAuthorInput {
   where: BookWhereUniqueInput!
-  data: BookUpdateWithoutReviwerDataInput!
+  data: BookUpdateWithoutAuthorDataInput!
 }
 
-input BookUpsertNestedInput {
-  update: BookUpdateDataInput!
-  create: BookCreateInput!
-}
-
-input BookUpsertWithWhereUniqueWithoutReviwerInput {
-  where: BookWhereUniqueInput!
+input BookUpsertWithoutReviwerInput {
   update: BookUpdateWithoutReviwerDataInput!
   create: BookCreateWithoutReviwerInput!
+}
+
+input BookUpsertWithWhereUniqueWithoutAuthorInput {
+  where: BookWhereUniqueInput!
+  update: BookUpdateWithoutAuthorDataInput!
+  create: BookCreateWithoutAuthorInput!
 }
 
 input BookWhereInput {
@@ -302,46 +307,6 @@ input BookWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  author: String
-
-  """All values that are not equal to given value."""
-  author_not: String
-
-  """All values that are contained in given list."""
-  author_in: [String!]
-
-  """All values that are not contained in given list."""
-  author_not_in: [String!]
-
-  """All values less than the given value."""
-  author_lt: String
-
-  """All values less than or equal the given value."""
-  author_lte: String
-
-  """All values greater than the given value."""
-  author_gt: String
-
-  """All values greater than or equal the given value."""
-  author_gte: String
-
-  """All values containing the given string."""
-  author_contains: String
-
-  """All values not containing the given string."""
-  author_not_contains: String
-
-  """All values starting with the given string."""
-  author_starts_with: String
-
-  """All values not starting with the given string."""
-  author_not_starts_with: String
-
-  """All values ending with the given string."""
-  author_ends_with: String
-
-  """All values not ending with the given string."""
-  author_not_ends_with: String
   published: Boolean
 
   """All values that are not equal to given value."""
@@ -474,7 +439,10 @@ input BookWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
-  reviwer: UserWhereInput
+  author: UserWhereInput
+  reviwer_every: ReviewWhereInput
+  reviwer_some: ReviewWhereInput
+  reviwer_none: ReviewWhereInput
 }
 
 input BookWhereUniqueInput {
@@ -490,24 +458,24 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createReview(data: ReviewCreateInput!): Review!
   createUser(data: UserCreateInput!): User!
   createBook(data: BookCreateInput!): Book!
-  updateReview(data: ReviewUpdateInput!, where: ReviewWhereUniqueInput!): Review
+  createReview(data: ReviewCreateInput!): Review!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateBook(data: BookUpdateInput!, where: BookWhereUniqueInput!): Book
-  deleteReview(where: ReviewWhereUniqueInput!): Review
+  updateReview(data: ReviewUpdateInput!, where: ReviewWhereUniqueInput!): Review
   deleteUser(where: UserWhereUniqueInput!): User
   deleteBook(where: BookWhereUniqueInput!): Book
-  upsertReview(where: ReviewWhereUniqueInput!, create: ReviewCreateInput!, update: ReviewUpdateInput!): Review!
+  deleteReview(where: ReviewWhereUniqueInput!): Review
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertBook(where: BookWhereUniqueInput!, create: BookCreateInput!, update: BookUpdateInput!): Book!
-  updateManyReviews(data: ReviewUpdateInput!, where: ReviewWhereInput): BatchPayload!
+  upsertReview(where: ReviewWhereUniqueInput!, create: ReviewCreateInput!, update: ReviewUpdateInput!): Review!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyBooks(data: BookUpdateInput!, where: BookWhereInput): BatchPayload!
-  deleteManyReviews(where: ReviewWhereInput): BatchPayload!
+  updateManyReviews(data: ReviewUpdateInput!, where: ReviewWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyBooks(where: BookWhereInput): BatchPayload!
+  deleteManyReviews(where: ReviewWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -538,15 +506,15 @@ type PageInfo {
 }
 
 type Query {
-  reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   books(where: BookWhereInput, orderBy: BookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Book]!
-  review(where: ReviewWhereUniqueInput!): Review
+  reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review]!
   user(where: UserWhereUniqueInput!): User
   book(where: BookWhereUniqueInput!): Book
-  reviewsConnection(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ReviewConnection!
+  review(where: ReviewWhereUniqueInput!): Review
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   booksConnection(where: BookWhereInput, orderBy: BookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BookConnection!
+  reviewsConnection(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ReviewConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -580,8 +548,32 @@ input ReviewCreateInput {
   title: String!
   text: String!
   like: Int!
-  reviwer: UserCreateOneInput!
-  book: BookCreateOneInput!
+  reviwer: UserCreateOneWithoutReviewsInput!
+  book: BookCreateOneWithoutReviwerInput!
+}
+
+input ReviewCreateManyWithoutBookInput {
+  create: [ReviewCreateWithoutBookInput!]
+  connect: [ReviewWhereUniqueInput!]
+}
+
+input ReviewCreateManyWithoutReviwerInput {
+  create: [ReviewCreateWithoutReviwerInput!]
+  connect: [ReviewWhereUniqueInput!]
+}
+
+input ReviewCreateWithoutBookInput {
+  title: String!
+  text: String!
+  like: Int!
+  reviwer: UserCreateOneWithoutReviewsInput!
+}
+
+input ReviewCreateWithoutReviwerInput {
+  title: String!
+  text: String!
+  like: Int!
+  book: BookCreateOneWithoutReviwerInput!
 }
 
 """An edge in a connection."""
@@ -660,8 +652,62 @@ input ReviewUpdateInput {
   title: String
   text: String
   like: Int
-  reviwer: UserUpdateOneInput
-  book: BookUpdateOneInput
+  reviwer: UserUpdateOneWithoutReviewsInput
+  book: BookUpdateOneWithoutReviwerInput
+}
+
+input ReviewUpdateManyWithoutBookInput {
+  create: [ReviewCreateWithoutBookInput!]
+  connect: [ReviewWhereUniqueInput!]
+  disconnect: [ReviewWhereUniqueInput!]
+  delete: [ReviewWhereUniqueInput!]
+  update: [ReviewUpdateWithWhereUniqueWithoutBookInput!]
+  upsert: [ReviewUpsertWithWhereUniqueWithoutBookInput!]
+}
+
+input ReviewUpdateManyWithoutReviwerInput {
+  create: [ReviewCreateWithoutReviwerInput!]
+  connect: [ReviewWhereUniqueInput!]
+  disconnect: [ReviewWhereUniqueInput!]
+  delete: [ReviewWhereUniqueInput!]
+  update: [ReviewUpdateWithWhereUniqueWithoutReviwerInput!]
+  upsert: [ReviewUpsertWithWhereUniqueWithoutReviwerInput!]
+}
+
+input ReviewUpdateWithoutBookDataInput {
+  title: String
+  text: String
+  like: Int
+  reviwer: UserUpdateOneWithoutReviewsInput
+}
+
+input ReviewUpdateWithoutReviwerDataInput {
+  title: String
+  text: String
+  like: Int
+  book: BookUpdateOneWithoutReviwerInput
+}
+
+input ReviewUpdateWithWhereUniqueWithoutBookInput {
+  where: ReviewWhereUniqueInput!
+  data: ReviewUpdateWithoutBookDataInput!
+}
+
+input ReviewUpdateWithWhereUniqueWithoutReviwerInput {
+  where: ReviewWhereUniqueInput!
+  data: ReviewUpdateWithoutReviwerDataInput!
+}
+
+input ReviewUpsertWithWhereUniqueWithoutBookInput {
+  where: ReviewWhereUniqueInput!
+  update: ReviewUpdateWithoutBookDataInput!
+  create: ReviewCreateWithoutBookInput!
+}
+
+input ReviewUpsertWithWhereUniqueWithoutReviwerInput {
+  where: ReviewWhereUniqueInput!
+  update: ReviewUpdateWithoutReviwerDataInput!
+  create: ReviewCreateWithoutReviwerInput!
 }
 
 input ReviewWhereInput {
@@ -868,9 +914,9 @@ input ReviewWhereUniqueInput {
 }
 
 type Subscription {
-  review(where: ReviewSubscriptionWhereInput): ReviewSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   book(where: BookSubscriptionWhereInput): BookSubscriptionPayload
+  review(where: ReviewSubscriptionWhereInput): ReviewSubscriptionPayload
 }
 
 type User implements Node {
@@ -879,6 +925,7 @@ type User implements Node {
   password: String!
   email: String!
   books(where: BookWhereInput, orderBy: BookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Book!]
+  reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -897,12 +944,8 @@ input UserCreateInput {
   name: String!
   password: String!
   email: String!
-  books: BookCreateManyWithoutReviwerInput
-}
-
-input UserCreateOneInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
+  books: BookCreateManyWithoutAuthorInput
+  reviews: ReviewCreateManyWithoutReviwerInput
 }
 
 input UserCreateOneWithoutBooksInput {
@@ -910,10 +953,23 @@ input UserCreateOneWithoutBooksInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutReviewsInput {
+  create: UserCreateWithoutReviewsInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateWithoutBooksInput {
   name: String!
   password: String!
   email: String!
+  reviews: ReviewCreateManyWithoutReviwerInput
+}
+
+input UserCreateWithoutReviewsInput {
+  name: String!
+  password: String!
+  email: String!
+  books: BookCreateManyWithoutAuthorInput
 }
 
 """An edge in a connection."""
@@ -988,26 +1044,12 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
-input UserUpdateDataInput {
-  name: String
-  password: String
-  email: String
-  books: BookUpdateManyWithoutReviwerInput
-}
-
 input UserUpdateInput {
   name: String
   password: String
   email: String
-  books: BookUpdateManyWithoutReviwerInput
-}
-
-input UserUpdateOneInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-  delete: Boolean
-  update: UserUpdateDataInput
-  upsert: UserUpsertNestedInput
+  books: BookUpdateManyWithoutAuthorInput
+  reviews: ReviewUpdateManyWithoutReviwerInput
 }
 
 input UserUpdateOneWithoutBooksInput {
@@ -1018,20 +1060,36 @@ input UserUpdateOneWithoutBooksInput {
   upsert: UserUpsertWithoutBooksInput
 }
 
+input UserUpdateOneWithoutReviewsInput {
+  create: UserCreateWithoutReviewsInput
+  connect: UserWhereUniqueInput
+  delete: Boolean
+  update: UserUpdateWithoutReviewsDataInput
+  upsert: UserUpsertWithoutReviewsInput
+}
+
 input UserUpdateWithoutBooksDataInput {
   name: String
   password: String
   email: String
+  reviews: ReviewUpdateManyWithoutReviwerInput
 }
 
-input UserUpsertNestedInput {
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
+input UserUpdateWithoutReviewsDataInput {
+  name: String
+  password: String
+  email: String
+  books: BookUpdateManyWithoutAuthorInput
 }
 
 input UserUpsertWithoutBooksInput {
   update: UserUpdateWithoutBooksDataInput!
   create: UserCreateWithoutBooksInput!
+}
+
+input UserUpsertWithoutReviewsInput {
+  update: UserUpdateWithoutReviewsDataInput!
+  create: UserCreateWithoutReviewsInput!
 }
 
 input UserWhereInput {
@@ -1250,6 +1308,9 @@ input UserWhereInput {
   books_every: BookWhereInput
   books_some: BookWhereInput
   books_none: BookWhereInput
+  reviews_every: ReviewWhereInput
+  reviews_some: ReviewWhereInput
+  reviews_none: ReviewWhereInput
 }
 
 input UserWhereUniqueInput {

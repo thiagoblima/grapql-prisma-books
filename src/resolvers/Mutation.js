@@ -80,17 +80,16 @@ const Mutation = {
         return prisma.mutation.createBook({
             data: {
                 name: args.data.name,
-                author: args.data.author,
-                reviwer: {
+                isbn: args.data.isbn,
+                published: args.data.published,
+                author: {
                     connect: {
                         id: userId
                     }
-                },
-                isbn: args.data.isbn,
-                published: args.data.published
+                }
             }
         }, info)
-    }
+    },
 }
 
 export { Mutation as default }

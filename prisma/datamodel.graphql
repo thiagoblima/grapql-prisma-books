@@ -16,8 +16,8 @@ type Book {
   reviwer: [Review!]! @relation(name: "ReviewToBook", onDelete: CASCADE)
   published: Boolean!
   isbn: String!
-  like: Int!
-  rating: Int!
+  like: Int
+  rating: Int
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

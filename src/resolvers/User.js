@@ -6,7 +6,7 @@ const User = {
         resolve(parent, args, { prisma }, info) {
             return prisma.query.books({
                 where: {
-                    reviwer: {
+                    author: {
                         id: parent.id
                     }
                 }
