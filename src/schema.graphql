@@ -49,6 +49,8 @@
     input CreateBookInput {
         name: String!
         author: String!
+        likes: Int
+        rating: Int
         isbn: String!
         published: Boolean!
     }
@@ -69,9 +71,9 @@
         author: User!
         reviews: [Review!]!
         isbn: String!
-        like: Int
+        likes: Int!
         published: Boolean!
-        rating: Int
+        rating: Int!
         createdAt: DateTime! 
         updatedAt: DateTime!
     }
@@ -81,7 +83,7 @@
         text: String!
         title: String!
         author: User!
-        like: Int!
+        likes: Int!
         book: Book!
         createdAt: DateTime!
         updatedAt: DateTime!

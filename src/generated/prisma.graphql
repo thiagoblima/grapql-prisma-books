@@ -1,5 +1,5 @@
 # source: http://localhost:4466/food/dev
-# timestamp: Fri Aug 28 2020 17:55:45 GMT-0300 (-03)
+# timestamp: Fri Aug 28 2020 19:15:06 GMT-0300 (Brasilia Standard Time)
 
 type AggregateBook {
   count: Int!
@@ -25,7 +25,7 @@ type Book implements Node {
   reviwer(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
   published: Boolean!
   isbn: String!
-  like: Int
+  likes: Int
   rating: Int
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -45,7 +45,7 @@ input BookCreateInput {
   name: String!
   published: Boolean!
   isbn: String!
-  like: Int
+  likes: Int
   rating: Int
   author: UserCreateOneWithoutBooksInput!
   reviwer: ReviewCreateManyWithoutBookInput
@@ -65,7 +65,7 @@ input BookCreateWithoutAuthorInput {
   name: String!
   published: Boolean!
   isbn: String!
-  like: Int
+  likes: Int
   rating: Int
   reviwer: ReviewCreateManyWithoutBookInput
 }
@@ -74,7 +74,7 @@ input BookCreateWithoutReviwerInput {
   name: String!
   published: Boolean!
   isbn: String!
-  like: Int
+  likes: Int
   rating: Int
   author: UserCreateOneWithoutBooksInput!
 }
@@ -97,8 +97,8 @@ enum BookOrderByInput {
   published_DESC
   isbn_ASC
   isbn_DESC
-  like_ASC
-  like_DESC
+  likes_ASC
+  likes_DESC
   rating_ASC
   rating_DESC
   createdAt_ASC
@@ -112,7 +112,7 @@ type BookPreviousValues {
   name: String!
   published: Boolean!
   isbn: String!
-  like: Int
+  likes: Int
   rating: Int
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -161,7 +161,7 @@ input BookUpdateInput {
   name: String
   published: Boolean
   isbn: String
-  like: Int
+  likes: Int
   rating: Int
   author: UserUpdateOneWithoutBooksInput
   reviwer: ReviewUpdateManyWithoutBookInput
@@ -188,7 +188,7 @@ input BookUpdateWithoutAuthorDataInput {
   name: String
   published: Boolean
   isbn: String
-  like: Int
+  likes: Int
   rating: Int
   reviwer: ReviewUpdateManyWithoutBookInput
 }
@@ -197,7 +197,7 @@ input BookUpdateWithoutReviwerDataInput {
   name: String
   published: Boolean
   isbn: String
-  like: Int
+  likes: Int
   rating: Int
   author: UserUpdateOneWithoutBooksInput
 }
@@ -351,28 +351,28 @@ input BookWhereInput {
 
   """All values not ending with the given string."""
   isbn_not_ends_with: String
-  like: Int
+  likes: Int
 
   """All values that are not equal to given value."""
-  like_not: Int
+  likes_not: Int
 
   """All values that are contained in given list."""
-  like_in: [Int!]
+  likes_in: [Int!]
 
   """All values that are not contained in given list."""
-  like_not_in: [Int!]
+  likes_not_in: [Int!]
 
   """All values less than the given value."""
-  like_lt: Int
+  likes_lt: Int
 
   """All values less than or equal the given value."""
-  like_lte: Int
+  likes_lte: Int
 
   """All values greater than the given value."""
-  like_gt: Int
+  likes_gt: Int
 
   """All values greater than or equal the given value."""
-  like_gte: Int
+  likes_gte: Int
   rating: Int
 
   """All values that are not equal to given value."""
@@ -527,7 +527,7 @@ type Review implements Node {
   id: ID!
   title: String!
   text: String!
-  like: Int!
+  likes: Int!
   reviwer(where: UserWhereInput): User!
   book(where: BookWhereInput): Book!
   createdAt: DateTime!
@@ -547,7 +547,7 @@ type ReviewConnection {
 input ReviewCreateInput {
   title: String!
   text: String!
-  like: Int!
+  likes: Int!
   reviwer: UserCreateOneWithoutReviewsInput!
   book: BookCreateOneWithoutReviwerInput!
 }
@@ -565,14 +565,14 @@ input ReviewCreateManyWithoutReviwerInput {
 input ReviewCreateWithoutBookInput {
   title: String!
   text: String!
-  like: Int!
+  likes: Int!
   reviwer: UserCreateOneWithoutReviewsInput!
 }
 
 input ReviewCreateWithoutReviwerInput {
   title: String!
   text: String!
-  like: Int!
+  likes: Int!
   book: BookCreateOneWithoutReviwerInput!
 }
 
@@ -592,8 +592,8 @@ enum ReviewOrderByInput {
   title_DESC
   text_ASC
   text_DESC
-  like_ASC
-  like_DESC
+  likes_ASC
+  likes_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -604,7 +604,7 @@ type ReviewPreviousValues {
   id: ID!
   title: String!
   text: String!
-  like: Int!
+  likes: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -651,7 +651,7 @@ input ReviewSubscriptionWhereInput {
 input ReviewUpdateInput {
   title: String
   text: String
-  like: Int
+  likes: Int
   reviwer: UserUpdateOneWithoutReviewsInput
   book: BookUpdateOneWithoutReviwerInput
 }
@@ -677,14 +677,14 @@ input ReviewUpdateManyWithoutReviwerInput {
 input ReviewUpdateWithoutBookDataInput {
   title: String
   text: String
-  like: Int
+  likes: Int
   reviwer: UserUpdateOneWithoutReviewsInput
 }
 
 input ReviewUpdateWithoutReviwerDataInput {
   title: String
   text: String
-  like: Int
+  likes: Int
   book: BookUpdateOneWithoutReviwerInput
 }
 
@@ -839,28 +839,28 @@ input ReviewWhereInput {
 
   """All values not ending with the given string."""
   text_not_ends_with: String
-  like: Int
+  likes: Int
 
   """All values that are not equal to given value."""
-  like_not: Int
+  likes_not: Int
 
   """All values that are contained in given list."""
-  like_in: [Int!]
+  likes_in: [Int!]
 
   """All values that are not contained in given list."""
-  like_not_in: [Int!]
+  likes_not_in: [Int!]
 
   """All values less than the given value."""
-  like_lt: Int
+  likes_lt: Int
 
   """All values less than or equal the given value."""
-  like_lte: Int
+  likes_lte: Int
 
   """All values greater than the given value."""
-  like_gt: Int
+  likes_gt: Int
 
   """All values greater than or equal the given value."""
-  like_gte: Int
+  likes_gte: Int
   createdAt: DateTime
 
   """All values that are not equal to given value."""

@@ -82,6 +82,8 @@ const Mutation = {
                 name: args.data.name,
                 isbn: args.data.isbn,
                 published: args.data.published,
+                likes: 0,
+                rating: 0,
                 author: {
                     connect: {
                         id: userId
