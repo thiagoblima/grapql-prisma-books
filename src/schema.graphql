@@ -58,6 +58,7 @@
         name: String!
         email: String
         books: [Book!]!
+        reviews: [Review!]!
         createdAt: String!
         updatedAt: String!
     }
@@ -65,8 +66,8 @@
     type Book {
         id: ID!
         name: String!
-        author: String!
-        reviwer: User!
+        author: User!
+        reviews: [Review!]!
         isbn: String!
         like: Int!
         published: Boolean!
@@ -79,7 +80,7 @@
         id: ID!
         text: String!
         title: String!
-        reviwer: User!
+        author: User!
         like: Int!
         book: Book!
         createdAt: DateTime!

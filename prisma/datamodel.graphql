@@ -4,6 +4,7 @@ type User {
   password: String!
   email: String! @unique
   books: [Book!]! @relation(name: "BookToUser", onDelete: CASCADE)
+  reviews: [Review!]! @relation(name: "ReviewToUser", onDelete: CASCADE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

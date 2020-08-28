@@ -1,5 +1,5 @@
 # source: http://localhost:4466/food/dev
-# timestamp: Tue Aug 25 2020 03:22:45 GMT-0300 (-03)
+# timestamp: Fri Aug 28 2020 17:00:07 GMT-0300 (-03)
 
 type AggregateBook {
   count: Int!
@@ -23,7 +23,9 @@ type Book implements Node {
   name: String!
   author: String!
   reviwer(where: UserWhereInput): User!
+  published: Boolean!
   isbn: String!
+  like: Int!
   rating: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -42,7 +44,9 @@ type BookConnection {
 input BookCreateInput {
   name: String!
   author: String!
+  published: Boolean!
   isbn: String!
+  like: Int!
   rating: Int!
   reviwer: UserCreateOneWithoutBooksInput!
 }
@@ -60,7 +64,9 @@ input BookCreateOneInput {
 input BookCreateWithoutReviwerInput {
   name: String!
   author: String!
+  published: Boolean!
   isbn: String!
+  like: Int!
   rating: Int!
 }
 
@@ -80,8 +86,12 @@ enum BookOrderByInput {
   name_DESC
   author_ASC
   author_DESC
+  published_ASC
+  published_DESC
   isbn_ASC
   isbn_DESC
+  like_ASC
+  like_DESC
   rating_ASC
   rating_DESC
   createdAt_ASC
@@ -94,7 +104,9 @@ type BookPreviousValues {
   id: ID!
   name: String!
   author: String!
+  published: Boolean!
   isbn: String!
+  like: Int!
   rating: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -142,7 +154,9 @@ input BookSubscriptionWhereInput {
 input BookUpdateDataInput {
   name: String
   author: String
+  published: Boolean
   isbn: String
+  like: Int
   rating: Int
   reviwer: UserUpdateOneWithoutBooksInput
 }
@@ -150,7 +164,9 @@ input BookUpdateDataInput {
 input BookUpdateInput {
   name: String
   author: String
+  published: Boolean
   isbn: String
+  like: Int
   rating: Int
   reviwer: UserUpdateOneWithoutBooksInput
 }
@@ -175,7 +191,9 @@ input BookUpdateOneInput {
 input BookUpdateWithoutReviwerDataInput {
   name: String
   author: String
+  published: Boolean
   isbn: String
+  like: Int
   rating: Int
 }
 
@@ -324,6 +342,10 @@ input BookWhereInput {
 
   """All values not ending with the given string."""
   author_not_ends_with: String
+  published: Boolean
+
+  """All values that are not equal to given value."""
+  published_not: Boolean
   isbn: String
 
   """All values that are not equal to given value."""
@@ -364,6 +386,28 @@ input BookWhereInput {
 
   """All values not ending with the given string."""
   isbn_not_ends_with: String
+  like: Int
+
+  """All values that are not equal to given value."""
+  like_not: Int
+
+  """All values that are contained in given list."""
+  like_in: [Int!]
+
+  """All values that are not contained in given list."""
+  like_not_in: [Int!]
+
+  """All values less than the given value."""
+  like_lt: Int
+
+  """All values less than or equal the given value."""
+  like_lte: Int
+
+  """All values greater than the given value."""
+  like_gt: Int
+
+  """All values greater than or equal the given value."""
+  like_gte: Int
   rating: Int
 
   """All values that are not equal to given value."""
@@ -515,6 +559,7 @@ type Review implements Node {
   id: ID!
   title: String!
   text: String!
+  like: Int!
   reviwer(where: UserWhereInput): User!
   book(where: BookWhereInput): Book!
   createdAt: DateTime!
@@ -534,6 +579,7 @@ type ReviewConnection {
 input ReviewCreateInput {
   title: String!
   text: String!
+  like: Int!
   reviwer: UserCreateOneInput!
   book: BookCreateOneInput!
 }
@@ -554,6 +600,8 @@ enum ReviewOrderByInput {
   title_DESC
   text_ASC
   text_DESC
+  like_ASC
+  like_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -564,6 +612,7 @@ type ReviewPreviousValues {
   id: ID!
   title: String!
   text: String!
+  like: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -610,6 +659,7 @@ input ReviewSubscriptionWhereInput {
 input ReviewUpdateInput {
   title: String
   text: String
+  like: Int
   reviwer: UserUpdateOneInput
   book: BookUpdateOneInput
 }
@@ -743,6 +793,28 @@ input ReviewWhereInput {
 
   """All values not ending with the given string."""
   text_not_ends_with: String
+  like: Int
+
+  """All values that are not equal to given value."""
+  like_not: Int
+
+  """All values that are contained in given list."""
+  like_in: [Int!]
+
+  """All values that are not contained in given list."""
+  like_not_in: [Int!]
+
+  """All values less than the given value."""
+  like_lt: Int
+
+  """All values less than or equal the given value."""
+  like_lte: Int
+
+  """All values greater than the given value."""
+  like_gt: Int
+
+  """All values greater than or equal the given value."""
+  like_gte: Int
   createdAt: DateTime
 
   """All values that are not equal to given value."""
