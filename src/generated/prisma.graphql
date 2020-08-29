@@ -1,5 +1,5 @@
 # source: http://localhost:4466/food/dev
-# timestamp: Fri Aug 28 2020 19:15:06 GMT-0300 (Brasilia Standard Time)
+# timestamp: Fri Aug 28 2020 20:23:12 GMT-0300 (Brasilia Standard Time)
 
 type AggregateBook {
   count: Int!
@@ -25,6 +25,8 @@ type Book implements Node {
   reviwer(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
   published: Boolean!
   isbn: String!
+  pages: Int
+  chapters: Int
   likes: Int
   rating: Int
   createdAt: DateTime!
@@ -45,6 +47,8 @@ input BookCreateInput {
   name: String!
   published: Boolean!
   isbn: String!
+  pages: Int
+  chapters: Int
   likes: Int
   rating: Int
   author: UserCreateOneWithoutBooksInput!
@@ -65,6 +69,8 @@ input BookCreateWithoutAuthorInput {
   name: String!
   published: Boolean!
   isbn: String!
+  pages: Int
+  chapters: Int
   likes: Int
   rating: Int
   reviwer: ReviewCreateManyWithoutBookInput
@@ -74,6 +80,8 @@ input BookCreateWithoutReviwerInput {
   name: String!
   published: Boolean!
   isbn: String!
+  pages: Int
+  chapters: Int
   likes: Int
   rating: Int
   author: UserCreateOneWithoutBooksInput!
@@ -97,6 +105,10 @@ enum BookOrderByInput {
   published_DESC
   isbn_ASC
   isbn_DESC
+  pages_ASC
+  pages_DESC
+  chapters_ASC
+  chapters_DESC
   likes_ASC
   likes_DESC
   rating_ASC
@@ -112,6 +124,8 @@ type BookPreviousValues {
   name: String!
   published: Boolean!
   isbn: String!
+  pages: Int
+  chapters: Int
   likes: Int
   rating: Int
   createdAt: DateTime!
@@ -161,6 +175,8 @@ input BookUpdateInput {
   name: String
   published: Boolean
   isbn: String
+  pages: Int
+  chapters: Int
   likes: Int
   rating: Int
   author: UserUpdateOneWithoutBooksInput
@@ -188,6 +204,8 @@ input BookUpdateWithoutAuthorDataInput {
   name: String
   published: Boolean
   isbn: String
+  pages: Int
+  chapters: Int
   likes: Int
   rating: Int
   reviwer: ReviewUpdateManyWithoutBookInput
@@ -197,6 +215,8 @@ input BookUpdateWithoutReviwerDataInput {
   name: String
   published: Boolean
   isbn: String
+  pages: Int
+  chapters: Int
   likes: Int
   rating: Int
   author: UserUpdateOneWithoutBooksInput
@@ -351,6 +371,50 @@ input BookWhereInput {
 
   """All values not ending with the given string."""
   isbn_not_ends_with: String
+  pages: Int
+
+  """All values that are not equal to given value."""
+  pages_not: Int
+
+  """All values that are contained in given list."""
+  pages_in: [Int!]
+
+  """All values that are not contained in given list."""
+  pages_not_in: [Int!]
+
+  """All values less than the given value."""
+  pages_lt: Int
+
+  """All values less than or equal the given value."""
+  pages_lte: Int
+
+  """All values greater than the given value."""
+  pages_gt: Int
+
+  """All values greater than or equal the given value."""
+  pages_gte: Int
+  chapters: Int
+
+  """All values that are not equal to given value."""
+  chapters_not: Int
+
+  """All values that are contained in given list."""
+  chapters_in: [Int!]
+
+  """All values that are not contained in given list."""
+  chapters_not_in: [Int!]
+
+  """All values less than the given value."""
+  chapters_lt: Int
+
+  """All values less than or equal the given value."""
+  chapters_lte: Int
+
+  """All values greater than the given value."""
+  chapters_gt: Int
+
+  """All values greater than or equal the given value."""
+  chapters_gte: Int
   likes: Int
 
   """All values that are not equal to given value."""

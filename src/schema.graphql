@@ -51,6 +51,8 @@
         author: String!
         likes: Int
         rating: Int
+        pages: Int
+        chapters: Int
         isbn: String!
         published: Boolean!
     }
@@ -74,6 +76,8 @@
         likes: Int!
         published: Boolean!
         rating: Int!
+        pages: Int
+        chapters: Int
         createdAt: DateTime! 
         updatedAt: DateTime!
     }
