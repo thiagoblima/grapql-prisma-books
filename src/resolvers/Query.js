@@ -22,6 +22,17 @@ const Query = {
         return prisma.query.users(opArgs, info)
      
     },
+    books(parent, args, { prisma }, info) { 
+        const opArgs = {
+            first: args.first,
+            skip: args.skip,
+            after: args.after
+        }
+
+    
+        return prisma.query.books(opArgs, info)
+      
+    },
     greeting(parent, args, ctx, info) {
         if (args.name && args.position) {
             return `Hello, ${args.name}! You are my favoriate ${args.position}.`
