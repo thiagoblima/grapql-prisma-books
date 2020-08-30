@@ -92,6 +92,26 @@ const Mutation = {
             }
         }, info)
     },
+    async deleteBook(parent, args, { prisma, request }, info) {
+        const userId = getUserId(request)
+        const bookExists = await prisma.exists.Book({
+           id: args.id,
+           author: {
+               id: userId
+           }
+        })
+ 
+        if (!bookExists) {
+            throw new Error('Unable to delete book')
+        }
+ 
+        return prisma.mutation.deleteBook({
+           where: {
+               id: args.id
+           }
+        })
+ 
+     },
 }
 
 export { Mutation as default }

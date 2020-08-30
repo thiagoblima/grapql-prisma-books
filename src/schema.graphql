@@ -18,6 +18,7 @@
         deleteUser: User!
         createBook(data: CreateBookInput!): Book!
         updateBook(data: UpdateBookInput!): Book!
+        deleteBook(id: ID!): Book!
     }
 
     type Subscription {
