@@ -17,6 +17,7 @@
         updateUser(data: UpdateUserInput!): User!
         deleteUser: User!
         createBook(data: CreateBookInput!): Book!
+        updateBook(data: UpdateBookInput!): Book!
     }
 
     type Subscription {
@@ -44,6 +45,14 @@
         name: String
         email: String
         password: String
+    }
+
+    input UpdateBookInput {
+        likes: Int
+        published: Boolean
+        rating: Int
+        pages: Int
+        chapters: Int
     }
 
     input CreateBookInput {

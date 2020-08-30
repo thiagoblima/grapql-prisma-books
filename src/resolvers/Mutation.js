@@ -12,7 +12,7 @@ const Mutation = {
                 password
             }
         })
-
+        
         return {
             user,
             token: generateToken(user.id)
