@@ -17,7 +17,7 @@
         updateUser(data: UpdateUserInput!): User!
         deleteUser: User!
         createBook(data: CreateBookInput!): Book!
-        updateBook(data: UpdateBookInput!): Book!
+        updateBook(id: ID!, data: UpdateBookInput!): Book!
         deleteBook(id: ID!): Book!
     }
 
@@ -50,7 +50,7 @@
 
     input UpdateBookInput {
         likes: Int
-        published: Boolean
+        published: Boolean!
         rating: Int
         pages: Int
         chapters: Int

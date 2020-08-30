@@ -112,6 +112,38 @@ const Mutation = {
         })
  
      },
+     async updateBook(parent, args, { prisma, request }, info) {
+        const userId = getUserId(request)
+        const bookExists = await prisma.exists.Book({
+            id: args.id,
+            author: {
+                id: userId
+            } 
+        })
+
+        const isPublished = await prisma.exists.Book({ id: args.id, published: true })
+
+        if (!bookExists) {
+            throw new Error('Unable to update book')
+        }
+
+        if (isPublished && args.data.published === false) {
+            await prisma.mutation.deleteManyReviews({
+                where: {
+                    book: {
+                        id: args.id
+                    }
+                }
+            })
+        }
+
+        return prisma.mutation.updateBook({
+            where: {
+                id : args.id
+            },
+            data: args.data
+        }, info)
+    },
 }
 
 export { Mutation as default }
