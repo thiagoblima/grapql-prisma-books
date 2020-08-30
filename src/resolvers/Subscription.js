@@ -24,6 +24,17 @@ const Subscription = {
             }, info)
         }
     },
+    book: {
+        subscribe(parent, args, { prisma }, info) {
+            return prisma.subscription.book({
+                where: {
+                   node: {
+                       published: true
+                   }
+                }
+            }, info)
+        }
+    },
 }
 
 export { Subscription as default }

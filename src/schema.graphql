@@ -24,6 +24,7 @@
     type Subscription {
         count: Int!
         user: CreateUserSubscriptionPayload!
+        book: BooksubscriptionPayload!
     }
 
     type AuthPayload {
@@ -112,5 +113,10 @@
       type CreateUserSubscriptionPayload {
         mutation: MutationType!
         node: User!
+    }
+
+     type BooksubscriptionPayload {
+        mutation: MutationType!
+        node: Book!
     }
     
