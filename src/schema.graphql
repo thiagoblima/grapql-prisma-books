@@ -19,6 +19,9 @@
         createBook(data: CreateBookInput!): Book!
         updateBook(id: ID!, data: UpdateBookInput!): Book!
         deleteBook(id: ID!): Book!
+        createReview(data: CreateReviewInput!): Review!
+        deleteReview(id: ID!): Review!
+        updateReview(id: ID!, data: UpdateReviewInput!): Review!
     }
 
     type Subscription {
@@ -68,6 +71,16 @@
         published: Boolean!
     }
 
+     input CreateReviewInput {
+        text: String! 
+        title: String!
+        book: ID!
+    }
+
+     input UpdateReviewInput {
+        text: String
+    }
+
     type User {
         id: ID!
         name: String!
@@ -97,8 +110,8 @@
         id: ID!
         text: String!
         title: String!
-        author: User!
         likes: Int!
+        reviwer: User!
         book: Book!
         createdAt: DateTime!
         updatedAt: DateTime!

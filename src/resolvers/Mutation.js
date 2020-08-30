@@ -144,6 +144,35 @@ const Mutation = {
             data: args.data
         }, info)
     },
+    async createReview(parent, args, { prisma, request }, info) {
+        const userId = getUserId(request)
+        const bookExists = await prisma.exists.Book({
+            id: args.data.book,
+            published : true
+        })
+ 
+        if (!bookExists) {
+            throw new Error('Unable to find Book')
+        }
+ 
+        return prisma.mutation.createReview({
+            data: {
+                text: args.data.text,
+                title: args.data.title,
+                likes: 0,
+                reviwer: {
+                    connect: {
+                        id: userId
+                    }
+                },
+                book: {
+                    connect: {
+                        id: args.data.book
+                    }
+                }
+            }
+        }, info)
+     },
 }
 
 export { Mutation as default }
