@@ -11,6 +11,11 @@ Book store over Nodejs and Apollo GraphQL microservices build over *Prisma ORM /
 
 > https://blooming-mesa-15728.herokuapp.com/
 
+## Installation:
+
+> First 
+You will need to create an account at [https://www.prisma.io/cloud](https://www.prisma.io/cloud)
+
 
 ## Release History
 
