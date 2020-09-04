@@ -1,4 +1,4 @@
-# prisma-graphql
+# Release My Book App!
 > Prisma ORM to manipulate GraphQL - Yoga Framework.
 
 Book store over Nodejs and Apollo GraphQL microservices build over *Prisma ORM / Prisma Cloud*.
