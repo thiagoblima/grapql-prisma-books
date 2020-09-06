@@ -14,15 +14,16 @@ Book store over Nodejs and Apollo GraphQL microservices build over *Prisma ORM /
 ## Installation:
 
 #### First:
-
 > You will need to create an account at [https://www.prisma.io/cloud](https://www.prisma.io/cloud)
 
 #### Second:
-
 > You will need to have *prisma-cli* installed globally on prisma/1.12.0 version.
 
 #### Third:
 > Check the _prisma-cli_ documention which is rich of details and commands [here](https://bit.ly/prisma-cli-commands).
+
+#### Fourth:
+> npm install
 
 ## Release History
 
